@@ -43,29 +43,32 @@ public class Labo3 {
        return groups; 
     }
     public List<Joke> jokeCreator() {
+        List<Joke> jokes = new ArrayList<>();
         int numberGroups = config.getNumberGroup();
-        List<Person> listpeopleRecieving = config.getPeopleRecieving();
+        int numberOfPeople = config.getPeopleRecieving().size();
         
-        int numberOfPeople = listpeopleRecieving.size();
+        
+        
         if(numberOfPeople/numberGroups < 3) {
             System.out.println("NOT ENOUGH PEOPLE");
         }
         List<String> messages = config.getMessages();
         
-        List<Group> groups = groupCreator(numberGroups, listpeopleRecieving);
+        List<Group> groups = groupCreator(numberGroups, config.getPeopleRecieving());
         
-        List<Joke> jokes = new ArrayList<>();
+        
         int compteurMessage = 0;
         for(Group gro : groups) {
             Joke joke = new Joke();
                  
-            List<Person> people = gro.getList();
-            Collections.shuffle(people);
-            Person sender = people.remove(0);
-            
+            List<Person> peopleRecieving = gro.getList();
+            Collections.shuffle(peopleRecieving);
+            Person sender = peopleRecieving.remove(0);
+            //adding list to the joke
             joke.setSender(sender);
+            joke.addPeopleTo(peopleRecieving);
             joke.addPeopleCC(config.getPeopleCc());
-            joke.addPeopleTo(listpeopleRecieving);
+            
             String message = messages.get(compteurMessage);
             compteurMessage = (compteurMessage +1) % messages.size();
             joke.SetMessage(message); 
@@ -75,22 +78,21 @@ public class Labo3 {
         
     }
     public static void main(String [] args) {
-        
+        SmtpClient client = new SmtpClient("localhost", 25);
+         
         try {
+            client.connect();
+            
             Configurator config = new Configurator();
             Labo3 joking = new Labo3(config);
             List<Joke> listeToDo = new ArrayList<>(joking.jokeCreator());
-            
-            SmtpClient client = new SmtpClient("localhost", 25);
-            client.connect();
-            
+   
             for(Joke prank : listeToDo) {
-                System.out.println("hello");
                 client.sendMessage(prank.createMail());
             }
             client.disconnect();   
-        } catch(IOException eio) {
-            System.out.println("ERROR_final");
+        } catch(IOException error) {
+            System.out.println("ERROR_final:" + error);
         } 
     }   
 }

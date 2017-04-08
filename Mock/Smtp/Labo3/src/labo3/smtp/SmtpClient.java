@@ -11,7 +11,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.util.logging.Logger;
 import labo3.model.Message;
 
 public class SmtpClient {
@@ -20,9 +19,9 @@ public class SmtpClient {
     private BufferedReader bufferRead;
     private PrintWriter printer;
     
-    private int serverPort;
-    private String smtpServeur;
-    private String EndofLine = "\r\n";
+    private final int serverPort;
+    private final String smtpServeur;
+    private final String EndofLine = "\r\n";
     
     public SmtpClient(String smtpServeur, int port) {
         this.smtpServeur = smtpServeur;
@@ -30,11 +29,13 @@ public class SmtpClient {
     }
     public void connect() throws IOException {
         socketClient = new Socket(smtpServeur,serverPort);
-        printer = new PrintWriter(new OutputStreamWriter(socketClient.getOutputStream(),"UTF-8"));
+        printer = new PrintWriter(new OutputStreamWriter(socketClient.getOutputStream(),"UTF-8"),true);
         bufferRead = new BufferedReader(new InputStreamReader(socketClient.getInputStream(),"UTF-8"));
      
     }
     public void disconnect() throws IOException{
+        printer.write("QUIT" + EndofLine);
+        printer.flush();
         bufferRead.close();        
         printer.close();
         socketClient.close();
@@ -42,8 +43,7 @@ public class SmtpClient {
     public void sendMessage(Message m1) throws IOException {
        
         
-        String line="";
-        line = bufferRead.readLine();
+        String line = bufferRead.readLine();
         printer.write("EHLO BEGIN" + EndofLine);
         printer.flush();
         line = bufferRead.readLine();
@@ -58,21 +58,21 @@ public class SmtpClient {
         printer.write("MAIL FROM: " + m1.getFrom() + EndofLine);
                
         printer.flush();
-        bufferRead.readLine();
+        line = bufferRead.readLine();
         
         for(String emailTo : m1.getTo()) {
             printer.write("RCPT TO: ");
             printer.write(emailTo);
             printer.write(EndofLine);
             printer.flush();
-           bufferRead.readLine();
+            line = bufferRead.readLine();
         }
         for(String emailTo : m1.getCc()) {
             printer.write("RCPT TO:");
             printer.write(emailTo);
             printer.write(EndofLine);
             printer.flush();
-            bufferRead.readLine();
+            line = bufferRead.readLine();
         }
         
         printer.write(EndofLine);
@@ -99,7 +99,6 @@ public class SmtpClient {
         printer.write(EndofLine);
         printer.flush();
         bufferRead.readLine();
-        printer.write("QUIT" + EndofLine);
-        printer.flush();      
+              
     }   
 }
