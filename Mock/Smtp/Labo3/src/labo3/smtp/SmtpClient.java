@@ -51,7 +51,7 @@ public class SmtpClient {
         line = bufferRead.readLine();
         
         if(!line.startsWith("250")) {
-            throw new IOException("PROBLEM OCCURED");
+            throw new IOException("PROBLEM OCCURED IN PROTOCOL");
         }
         while(line.startsWith("250-")) {
                 line = bufferRead.readLine();           

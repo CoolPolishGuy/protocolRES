@@ -2,6 +2,8 @@
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
+ *
+ *@author Myszkorowski et Zanone
  */
 package labo3.configurations;
 
@@ -64,27 +66,7 @@ public class Configurator {
         return peopleMails;
         
     }
-    private List<String> loadmessages(String fileMessages) throws IOException {
-        
-        List<String> messages =new ArrayList<>();
-        FileInputStream file = new FileInputStream(fileMessages);
-        InputStreamReader fileRead = new InputStreamReader(file,"UTF-8");
-        BufferedReader buffer = new BufferedReader(fileRead);
-        String message = buffer.readLine();     
-        while(message != null){
-            StringBuilder messageMail= new StringBuilder();
-            //loan demander
-            while(message != null &&(!message.equals("=="))) {
-                messageMail.append(message);
-                messageMail.append("\r\n");
-                message = buffer.readLine();
-            }         
-            messages.add(messageMail.toString());
-            message = buffer.readLine();
-        }           
-        return messages;
-    } 
-    public List<String> getMessages() {
+        public List<String> getMessages() {
         return messages;
     }
     public int getNumberGroup()  {
@@ -96,4 +78,26 @@ public class Configurator {
     public  List<Person> getPeopleRecieving () {
         return peopleRecieving;
     }
+    private List<String> loadmessages(String fileMessages) throws IOException {
+        
+        List<String> messages =new ArrayList<>();
+        //Reading the files
+        FileInputStream file = new FileInputStream(fileMessages);
+        InputStreamReader fileRead = new InputStreamReader(file,"UTF-8");
+        BufferedReader buffer = new BufferedReader(fileRead);
+        String message = buffer.readLine();     
+        while(message != null){
+            StringBuilder messageMail= new StringBuilder();
+            //seperating the different emails
+            while(message != null &&(!message.equals("=="))) {
+                messageMail.append(message);
+                messageMail.append("\r\n");
+                message = buffer.readLine();
+            }         
+            messages.add(messageMail.toString());
+            message = buffer.readLine();
+        }           
+        return messages;
+    } 
+
 }

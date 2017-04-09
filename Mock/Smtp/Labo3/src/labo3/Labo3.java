@@ -50,17 +50,12 @@ public class Labo3 {
         int numberGroups = config.getNumberGroup();
         int numberOfPeople = config.getPeopleRecieving().size();
         
-        
-        
-        if(numberOfPeople/numberGroups < 3) {
-            System.out.println("NOT ENOUGH PEOPLE");
-        }
         List<String> messages = config.getMessages();
         
         List<Group> groups = groupCreator(numberGroups, config.getPeopleRecieving());
         
         
-        int compteurMessage = 0;
+        int countingMessage = 0;
         for(Group gro : groups) {
             Joke joke = new Joke();
                  
