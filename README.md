@@ -1,9 +1,9 @@
 # Laboratoire SMTP
 
 ### Introduction
-In this pratical exercice the the purpose is to create a prank generator 
-in order to send email through a smtp protocol to other students. As we could imagine 
-in an other purpose we could try to actually send fake emails to some email adress.
+In this pratical exercise the purpose is to create a prank generator 
+in order to send email through a smtp protocol to other students.In an 
+other purpose we could try to actually send fake emails to real email address.
 
 However the main purpose in this case is to see how the implementation allows us to send 
 different emails to different people.
@@ -21,6 +21,13 @@ Once the file is downloaded you can launch it by simply going to file where the 
 Now the server is listening on the port that you setup , by the default it is the 8282. You can open a browser and type 
 
 `localhost:8282`: you will directly be on the smtp server
+
+Once the application built you can run it inside your favorite IDE or you can go the main class
+which in our case is inside the Labo3.java. 
+If you use command prompt to launch it. All you have to do is go the .\src\labo3 
+and type
+
+`java labo3`:
 
 
 ### The application itself
@@ -48,6 +55,8 @@ public static void main(String [] args) {
         } 
     }
 ```
-what we have here is a SmtpClient that we need to create in order to connect the right port and server then all we have to do is create a prank with the right configurations which takes the right files with the correct encoding and parse them into arrays so that we can easly access them and work with.
+what we have here is a SmtpClient that we need to create in order to connect the right port and server then all we have 
+to do is create a prank with the right configurations which takes the right files with the correct encoding and parse 
+them into arrays so that we can easly access them and work with.
 Once every group has been created we need to go through the list of jokes and send them to the group randomly defined.
 Once every email has been sent. We can disconnect from the channel because we have sent every emails that we wanted.
