@@ -67,8 +67,8 @@ public class Labo3 {
             joke.addPeopleTo(peopleRecieving);
             joke.addPeopleCC(config.getPeopleCc());
             
-            String message = messages.get(compteurMessage);
-            compteurMessage = (compteurMessage +1) % messages.size();
+            String message = messages.get(countingMessage);
+            countingMessage = (countingMessage +1) % messages.size();
             joke.SetMessage(message); 
             jokes.add(joke);
         }

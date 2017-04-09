@@ -17,10 +17,10 @@ public class Person {
     
     public Person(String mail) {
         this.mail = mail;
-        /*int pos1 = mail.indexOf(".");
+        int pos1 = mail.indexOf(".");
         int pos2 = mail.indexOf("@");
         this.firstName = mail.substring(0,pos1);
-        this.lastName = mail.substring(pos1+1,pos2);*/
+        //this.lastName = mail.substring(pos1+1,pos2);
     }
     
     public Person (String lasName ,String firstName,String mail) {
