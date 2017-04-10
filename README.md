@@ -27,6 +27,10 @@ which in our case is inside the Labo3.java.
 If you use command prompt to launch it. All you have to do is go the .\src\labo3 
 and type
 
+Finally you have to change the path of the configurations files that are located in the package labo3.configurations, replace
+the path by your own. We have used absolute path which allows us to use one set of files for differents applications in different 
+IDE.
+
 `java labo3`:
 
 
